@@ -11,4 +11,5 @@ public class Paiement {
     private int paiementId;
     private Float montant;
     private String modePaiement;
+    private  int idCommande;
 }

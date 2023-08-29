@@ -1,7 +1,7 @@
-package com.examen.crud.service;
+package com.examen.crud.service.client;
 
 import com.examen.crud.model.Client;
-import com.examen.crud.repository.ClientRepository;
+import com.examen.crud.repository.client.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.examen.crud.repository;
+package com.examen.crud.service.client;
 
 import com.examen.crud.model.Client;
 
 import java.util.List;
 
-public interface ClientRepository {
+public interface ClientService {
     Client findById(int id);
 
     List<Client> findAll();

@@ -1,4 +1,4 @@
-package com.examen.crud.repository;
+package com.examen.crud.repository.produit;
 
 import com.examen.crud.JDBC.ConnectionDB;
 import com.examen.crud.model.Produit;

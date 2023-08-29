@@ -1,4 +1,4 @@
-package com.examen.crud.service;
+package com.examen.crud.service.produit;
 
 import com.examen.crud.model.Produit;
 

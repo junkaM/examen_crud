@@ -1,9 +1,8 @@
-package com.examen.crud.service;
+package com.examen.crud.service.produit;
 
 
 import com.examen.crud.model.Produit;
-import com.examen.crud.repository.ProduitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.examen.crud.repository.produit.ProduitRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

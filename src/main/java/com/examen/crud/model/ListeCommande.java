@@ -7,7 +7,8 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Liste_commande {
-    private int liste_commande_id;
-    private int quantité;
+public class ListeCommande {
+    private int listeCommandeId;
+    private int quantite;
+    private int produitId;
 }

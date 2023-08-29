@@ -3,7 +3,7 @@ package com.examen.crud.model;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -11,6 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Commande {
-    private int liste_commande_id;
-    private Date date_de_commande;
+    private int listeCommandeId;
+    private Timestamp dateDeCommande;
+    private int ClientId;
+    private int CommandeId;
 }

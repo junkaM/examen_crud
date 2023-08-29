@@ -1,7 +1,7 @@
 package com.examen.crud.controller;
 
 import com.examen.crud.model.Client;
-import com.examen.crud.service.ClientService;
+import com.examen.crud.service.client.ClientService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

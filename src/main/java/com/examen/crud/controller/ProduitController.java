@@ -1,11 +1,9 @@
 package com.examen.crud.controller;
 
 import com.examen.crud.model.Produit;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.examen.crud.service.ProduitService;
+import com.examen.crud.service.produit.ProduitService;
 
-import java.io.Serializable;
 import java.util.List;
 
 @RestController
