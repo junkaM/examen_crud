@@ -2,15 +2,15 @@ package com.examen.crud.model;
 
 import lombok.*;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @EqualsAndHashCode
 public class Client {
-    private int clientId;
+    private int id;
     private String nom;
-    private String prénom;
+    private String prenom;
     private String adresse;
-    private String numéro_téléphone;
+    private String numeroTelephone;
 }

@@ -9,25 +9,22 @@ import java.sql.SQLException;
 
 
 @Configuration
-    public class ConnectionDB {
-        private Connection connection;
+public class ConnectionDB {
+    private Connection connection;
 
-        public ConnectionDB(){
-            try{
-                this.connection = DriverManager.getConnection(
-                        Credentials.URL,
-                        Credentials.USER,
-                        Credentials.PASSWORD
-                );
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
-
-        public Connection getConnection(){
-            return this.connection;
+    public ConnectionDB(){
+        try{
+            this.connection = DriverManager.getConnection(
+                    Credentials.URL,
+                    Credentials.USER,
+                    Credentials.PASSWORD
+            );
+        }catch(SQLException e){
+            e.printStackTrace();
         }
     }
 
-
-
+    public Connection getConnection(){
+        return this.connection;
+    }
+}

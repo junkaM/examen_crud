@@ -17,7 +17,7 @@ public class ProduitController {
         this.produitService = produitService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public Produit getProduitById(@PathVariable int id) {
         return produitService.findById(id);
     }
@@ -32,13 +32,13 @@ public class ProduitController {
         produitService.add(produit);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public void updateProduit(@PathVariable int id, @RequestBody Produit produit) {
         produit.setId(id);
         produitService.update(produit);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteProduit(@PathVariable int id) {
         produitService.delete(id);
     }
