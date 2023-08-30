@@ -19,11 +19,11 @@ public class JdbcCommandeRepository implements CommandeRepository{
     @Override
     public Commande findById(int id) {
         Commande commande = null;
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM commande WHERE liste_commande_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM commande WHERE liste_commande_id = ?");
         ) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     commande = new Commande(
                             resultSet.getInt("liste_commande_id"),
@@ -32,7 +32,7 @@ public class JdbcCommandeRepository implements CommandeRepository{
                             resultSet.getInt("liste_commande_id_liste_commande")
                     );
                 }
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,8 +42,8 @@ public class JdbcCommandeRepository implements CommandeRepository{
     @Override
     public List<Commande> findAll() {
         List<Commande> commandes = new ArrayList<>();
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM commande");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM commande");
              ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -62,8 +62,8 @@ public class JdbcCommandeRepository implements CommandeRepository{
     }
     @Override
     public void add(Commande commande) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO commande (date_de_commande, client_id_client, liste_commande_id_liste_commande) VALUES (?, ?, ?)");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("INSERT INTO commande (date_de_commande, client_id_client, liste_commande_id_liste_commande) VALUES (?, ?, ?)");
         ) {
             statement.setTimestamp(1, commande.getDateDeCommande());
             statement.setInt(2, commande.getClientId());
@@ -76,8 +76,8 @@ public class JdbcCommandeRepository implements CommandeRepository{
 
     @Override
     public void update(Commande commande, int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE commande SET date_de_commande = ?, client_id_client = ?, liste_commande_id_liste_commande = ? WHERE liste_commande_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("UPDATE commande SET date_de_commande = ?, client_id_client = ?, liste_commande_id_liste_commande = ? WHERE liste_commande_id = ?");
         ) {
             statement.setTimestamp(1, commande.getDateDeCommande());
             statement.setInt(2, commande.getClientId());
@@ -90,8 +90,8 @@ public class JdbcCommandeRepository implements CommandeRepository{
     }
     @Override
     public void delete(int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM commande WHERE liste_commande_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("DELETE FROM commande WHERE liste_commande_id = ?");
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();

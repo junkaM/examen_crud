@@ -22,11 +22,11 @@ public class JdbcListeCommandeRepository implements ListeCommandeRepository{
     @Override
     public ListeCommande findById(int id) {
         ListeCommande listeCommande = null;
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM liste_commande WHERE liste_commande_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM liste_commande WHERE liste_commande_id = ?");
         ) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     listeCommande = new ListeCommande(
                             resultSet.getInt("liste_commande_id"),
@@ -34,7 +34,7 @@ public class JdbcListeCommandeRepository implements ListeCommandeRepository{
                             resultSet.getInt("produit_id_produit")
                     );
                 }
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,8 +44,8 @@ public class JdbcListeCommandeRepository implements ListeCommandeRepository{
     @Override
     public List<ListeCommande> findAll() {
         List<ListeCommande> listeCommandes = new ArrayList<>();
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM liste_commande");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM liste_commande");
              ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -63,8 +63,8 @@ public class JdbcListeCommandeRepository implements ListeCommandeRepository{
     }
     @Override
     public void add(ListeCommande listeCommande) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO liste_commande (quantite, produit_id_produit) VALUES (?, ?)");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("INSERT INTO liste_commande (quantite, produit_id_produit) VALUES (?, ?)");
         ) {
             statement.setInt(1, listeCommande.getQuantite());
             statement.setInt(2, listeCommande.getProduitId());
@@ -76,8 +76,8 @@ public class JdbcListeCommandeRepository implements ListeCommandeRepository{
 
     @Override
     public void update(ListeCommande listeCommande, int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE liste_commande SET quantite = ?, produit_id_produit = ? WHERE liste_commande_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("UPDATE liste_commande SET quantite = ?, produit_id_produit = ? WHERE liste_commande_id = ?");
         ) {
             statement.setInt(1, listeCommande.getQuantite());
             statement.setInt(2, listeCommande.getProduitId());
@@ -89,8 +89,8 @@ public class JdbcListeCommandeRepository implements ListeCommandeRepository{
     }
     @Override
     public void delete(int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM liste_commande WHERE liste_commande_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("DELETE FROM liste_commande WHERE liste_commande_id = ?");
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();

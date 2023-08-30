@@ -23,11 +23,11 @@ public class JdbcProduitRepository implements ProduitRepository {
     @Override
     public Produit findById(int id) {
         Produit produit = null;
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM produit WHERE id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM produit WHERE id = ?");
         ) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     produit = new Produit(
                             resultSet.getInt("id"),
@@ -37,7 +37,7 @@ public class JdbcProduitRepository implements ProduitRepository {
                             resultSet.getInt("stock")
                     );
                 }
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,8 +47,8 @@ public class JdbcProduitRepository implements ProduitRepository {
     @Override
     public List<Produit> findAll() {
         List<Produit> produits = new ArrayList<>();
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM produit");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM produit");
              ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -69,8 +69,8 @@ public class JdbcProduitRepository implements ProduitRepository {
 
     @Override
     public void add(Produit produit) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO produit (nom, description, prix_unitaire, stock) VALUES (?, ?, ?, ?)");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("INSERT INTO produit (nom, description, prix_unitaire, stock) VALUES (?, ?, ?, ?)");
         ) {
             statement.setString(1, produit.getNom());
             statement.setString(2, produit.getDescription());
@@ -84,8 +84,8 @@ public class JdbcProduitRepository implements ProduitRepository {
 
     @Override
     public void update(Produit produit) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE produit SET nom = ?, description = ?, prix_unitaire = ?, stock = ? WHERE id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("UPDATE produit SET nom = ?, description = ?, prix_unitaire = ?, stock = ? WHERE id = ?");
         ) {
             statement.setString(1, produit.getNom());
             statement.setString(2, produit.getDescription());
@@ -100,8 +100,8 @@ public class JdbcProduitRepository implements ProduitRepository {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM produit WHERE id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("DELETE FROM produit WHERE id = ?");
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();

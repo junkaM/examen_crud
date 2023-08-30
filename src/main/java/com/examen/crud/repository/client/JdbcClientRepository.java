@@ -22,11 +22,11 @@ public class JdbcClientRepository implements ClientRepository{
     @Override
     public Client findById(int id) {
         Client client = null;
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM client WHERE client_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM client WHERE client_id = ?");
         ) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     client = new Client(
                             resultSet.getInt("client_id"),
@@ -36,7 +36,7 @@ public class JdbcClientRepository implements ClientRepository{
                             resultSet.getString("numero_telephone")
                     );
                 }
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,8 +46,8 @@ public class JdbcClientRepository implements ClientRepository{
     @Override
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM client");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM client");
              ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -67,8 +67,8 @@ public class JdbcClientRepository implements ClientRepository{
     }
     @Override
     public void add(Client client) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO client (nom, prenom, adresse, numero_telephone) VALUES (?, ?, ?, ?)");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("INSERT INTO client (nom, prenom, adresse, numero_telephone) VALUES (?, ?, ?, ?)");
         ) {
             statement.setString(1, client.getNom());
             statement.setString(2, client.getPrenom());
@@ -82,8 +82,8 @@ public class JdbcClientRepository implements ClientRepository{
 
     @Override
     public void update(Client client, int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE client SET nom = ?, prenom = ?, adresse = ?, numero_telephone = ? WHERE client_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("UPDATE client SET nom = ?, prenom = ?, adresse = ?, numero_telephone = ? WHERE client_id = ?");
         ) {
             statement.setString(1, client.getNom());
             statement.setString(2, client.getPrenom());
@@ -97,8 +97,8 @@ public class JdbcClientRepository implements ClientRepository{
     }
     @Override
     public void delete(int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM Client WHERE id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("DELETE FROM Client WHERE id = ?");
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();

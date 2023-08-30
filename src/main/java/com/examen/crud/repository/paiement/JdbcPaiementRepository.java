@@ -22,11 +22,11 @@ public class JdbcPaiementRepository implements PaiementRepository{
     @Override
     public Paiement findById(int id) {
         Paiement paiement = null;
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM paiement WHERE paiement_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM paiement WHERE paiement_id = ?");
         ) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     paiement = new Paiement(
                             resultSet.getInt("paiement_id"),
@@ -35,7 +35,7 @@ public class JdbcPaiementRepository implements PaiementRepository{
                             resultSet.getInt("liste_commande_id_commande")
                     );
                 }
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,8 +46,8 @@ public class JdbcPaiementRepository implements PaiementRepository{
     @Override
     public List<Paiement> findAll() {
         List<Paiement> paiements = new ArrayList<>();
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM paiement");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("SELECT * FROM paiement");
              ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -69,8 +69,8 @@ public class JdbcPaiementRepository implements PaiementRepository{
 
     @Override
     public void add(Paiement paiement) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO paiement (montant, mode_paiement, liste_commande_id_commande) VALUES (?, ?, ?)");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("INSERT INTO paiement (montant, mode_paiement, liste_commande_id_commande) VALUES (?, ?, ?)");
         ) {
             statement.setDouble(1, paiement.getMontant());
             statement.setString(2, paiement.getModePaiement());
@@ -83,8 +83,8 @@ public class JdbcPaiementRepository implements PaiementRepository{
 
     @Override
     public void update(Paiement paiement, int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE paiement SET montant = ?, mode_paiement = ?, liste_commande_id_commande = ? WHERE paiement_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("UPDATE paiement SET montant = ?, mode_paiement = ?, liste_commande_id_commande = ? WHERE paiement_id = ?");
         ) {
             statement.setDouble(1, paiement.getMontant());
             statement.setString(2, paiement.getModePaiement());
@@ -97,8 +97,8 @@ public class JdbcPaiementRepository implements PaiementRepository{
     }
     @Override
     public void delete(int id) {
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM paiement WHERE paiement_id = ?");
+        try (
+             PreparedStatement statement = connectionDB.getConnection().prepareStatement("DELETE FROM paiement WHERE paiement_id = ?");
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
